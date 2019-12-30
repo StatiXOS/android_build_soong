@@ -26,6 +26,7 @@ func init() {
 type GenruleExtraProperties struct {
 	Vendor_available   *bool
 	Recovery_available *bool
+        Vendor_overlay     *bool
 
 	// This genrule is for recovery variant
 	InRecovery bool `blueprint:"mutated"`

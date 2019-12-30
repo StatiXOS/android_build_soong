@@ -236,6 +236,8 @@ type VendorProperties struct {
 	// explicitly marked as `double_loadable: true` by the owner, or the dependency
 	// from the LLNDK lib should be cut if the lib is not designed to be double loaded.
 	Double_loadable *bool
+
+        Vendor_overlay  *bool
 }
 
 type ModuleContextIntf interface {
@@ -575,7 +577,7 @@ func (c *Module) getVndkExtendsModuleName() string {
 // Returns true only when this module is configured to have core and vendor
 // variants.
 func (c *Module) hasVendorVariant() bool {
-	return c.isVndk() || Bool(c.VendorProperties.Vendor_available)
+	return c.isVndk() || Bool(c.VendorProperties.Vendor_available) || Bool(c.VendorProperties.Vendor_overlay)
 }
 
 func (c *Module) inRecovery() bool {
@@ -2090,7 +2092,7 @@ func ImageMutator(mctx android.BottomUpMutatorContext) {
 			var recoveryVariantNeeded bool = false
 			if mctx.DeviceConfig().VndkVersion() == "" {
 				coreVariantNeeded = true
-			} else if Bool(props.Vendor_available) {
+			} else if Bool(props.Vendor_available) || Bool(props.Vendor_overlay) {
 				coreVariantNeeded = true
 				vendorVariantNeeded = true
 			} else if mctx.SocSpecific() || mctx.DeviceSpecific() {
@@ -2136,12 +2138,12 @@ func ImageMutator(mctx android.BottomUpMutatorContext) {
 	}
 
 	// Sanity check
-	vendorSpecific := mctx.SocSpecific() || mctx.DeviceSpecific()
+	vendorSpecific := mctx.SocSpecific() || mctx.DeviceSpecific() || mctx.VendorOverlay()
 	productSpecific := mctx.ProductSpecific()
 
 	if m.VendorProperties.Vendor_available != nil && vendorSpecific {
 		mctx.PropertyErrorf("vendor_available",
-			"doesn't make sense at the same time as `vendor: true`, `proprietary: true`, or `device_specific:true`")
+			"doesn't make sense at the same time as `vendor: true`, `proprietary: true`, `vendor_overlay: true`, or `device_specific:true`")
 		return
 	}
 
@@ -2165,7 +2167,7 @@ func ImageMutator(mctx android.BottomUpMutatorContext) {
 						m.getVndkExtendsModuleName())
 					return
 				}
-				if m.VendorProperties.Vendor_available == nil {
+				if m.VendorProperties.Vendor_available == nil && m.VendorProperties.Vendor_overlay == nil {
 					mctx.PropertyErrorf("vndk",
 						"vendor_available must be set to either true or false when `vndk: {enabled: true}`")
 					return
