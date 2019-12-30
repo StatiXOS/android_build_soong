@@ -187,6 +187,7 @@ func init() {
 			"LOCAL_USE_CLANG_LLD":              "use_clang_lld",
 			"LOCAL_PROPRIETARY_MODULE":         "proprietary",
 			"LOCAL_VENDOR_MODULE":              "vendor",
+			"LOCAL_VENDOR_OVERLAY_MODULE":      "vendor_overlay",
 			"LOCAL_ODM_MODULE":                 "device_specific",
 			"LOCAL_PRODUCT_MODULE":             "product_specific",
 			"LOCAL_PRODUCT_SERVICES_MODULE":    "product_services_specific",
@@ -625,6 +626,10 @@ func prebuiltModulePath(ctx variableAssignmentContext) error {
 		len(val.Strings) == 3 && val.Strings[0] == "" && val.Strings[1] == "/" {
 		fixed = val.Strings[2]
 		varname = "TARGET_OUT_VENDOR"
+	} else if len(val.Variables) == 2 && varLiteralName(val.Variables[0]) == "PRODUCT_OUT" && varLiteralName(val.Variables[1]) == "TARGET_COPY_OUT_VENDOR_OVERLAY" &&
+		len(val.Strings) == 3 && val.Strings[0] == "" && val.Strings[1] == "/" {
+                fixed = val.Strings[2]
+                varname = "TARGET_OUT_VENDOR_OVERLAY"
 	} else {
 		return fmt.Errorf("LOCAL_MODULE_PATH value should start with $(<some-varaible>)/ or $(PRODUCT_OUT)/$(TARGET_COPY_VENDOR)/")
 	}
