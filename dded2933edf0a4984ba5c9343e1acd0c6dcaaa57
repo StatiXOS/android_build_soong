@@ -16,6 +16,24 @@
       "message": "why not add hardware/oplus instead of adding everything under hardware?",
       "revId": "dded2933edf0a4984ba5c9343e1acd0c6dcaaa57",
       "serverId": "039621b9-0c7c-40f3-867c-684f4bc911d6"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "69f86bcf_e4c54eb4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000047
+      },
+      "writtenOn": "2022-12-25T19:34:45Z",
+      "side": 1,
+      "message": "because it only specifically includes oplus. This works but it\u0027s not the best way to do it.",
+      "parentUuid": "eab0dd50_e4b9df96",
+      "revId": "dded2933edf0a4984ba5c9343e1acd0c6dcaaa57",
+      "serverId": "039621b9-0c7c-40f3-867c-684f4bc911d6"
     }
   ]
 }
