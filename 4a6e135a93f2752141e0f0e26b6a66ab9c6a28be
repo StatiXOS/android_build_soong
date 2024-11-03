@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a0436e58_df6cd1aa",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000125
+      },
+      "writtenOn": "2024-11-03T10:13:01Z",
+      "side": 1,
+      "message": "This is the only way unless we track our own packages/modules/Virtualization (which has large files).",
+      "revId": "4a6e135a93f2752141e0f0e26b6a66ab9c6a28be",
+      "serverId": "039621b9-0c7c-40f3-867c-684f4bc911d6"
+    }
+  ]
+}
